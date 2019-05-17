@@ -1,11 +1,17 @@
 import React from 'react';
+
+import FirebaseContext from './components/FirebaseContext';
 import TopBar from './components/TopBar'
 
 function App() {
     return (
-        <div className="App">
-            <TopBar></TopBar>
-        </div>
+        <FirebaseContext.Consumer>
+            {firebase => (
+                <div className="App">
+                    <TopBar firebase={firebase}></TopBar>
+                </div>
+            )}
+        </FirebaseContext.Consumer>
     );
 }
 
