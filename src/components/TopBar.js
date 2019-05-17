@@ -33,10 +33,10 @@ function TopBar(props) {
           <IconButton className={classes.menuButton} color="inherit">
             <img src={logo} alt="logo" width="48" height="48"></img>
           </IconButton>
-          <Typography variant="h6" color="inherit" className={classes.grow}>
+          <Typography variant="h6" color="inherit" className={classes.grow} align={"right"}>
             hi there
           </Typography>
-          <IconButton>
+          <IconButton color="inherit">
             <FontAwesomeIcon icon={faSignInAlt}></FontAwesomeIcon>
           </IconButton>
         </Toolbar>
