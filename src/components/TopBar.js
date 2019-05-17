@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IconButton } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 
-import logo from './../logo.svg';
+import LogoIcon from './LogoIcon';
 
 const styles = {
   root: {
@@ -31,7 +31,7 @@ function TopBar(props) {
       <AppBar position="static">
         <Toolbar>
           <IconButton className={classes.menuButton} color="inherit">
-            <img src={logo} alt="logo" width="48" height="48"></img>
+            <LogoIcon />
           </IconButton>
           <Typography variant="h6" color="inherit" className={classes.grow} align={"right"}>
             hi there
