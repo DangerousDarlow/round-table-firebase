@@ -4,14 +4,11 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import Firebase from './components/Firebase';
-import FireBaseContext from './components/FirebaseContext';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 ReactDOM.render(
     <CssBaseline>
-        <FireBaseContext.Provider value={new Firebase()}>
-            <App/>
-        </FireBaseContext.Provider>
+        <App firebase={new Firebase()}></App>
     </CssBaseline>,
     document.getElementById('root')
 );

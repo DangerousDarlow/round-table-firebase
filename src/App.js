@@ -1,17 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
-import FirebaseContext from './components/FirebaseContext';
 import TopBar from './components/TopBar'
 
-function App() {
+const App = ({ firebase }) => {
+    useEffect(() => {
+        firebase.handleSignInResult();
+    })
+    
     return (
-        <FirebaseContext.Consumer>
-            {firebase => (
-                <div className="App">
-                    <TopBar firebase={firebase}></TopBar>
-                </div>
-            )}
-        </FirebaseContext.Consumer>
+        <div className="App">
+            <TopBar firebase={firebase}></TopBar>
+        </div>
     );
 }
 

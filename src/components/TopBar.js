@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -24,31 +24,28 @@ const styles = {
     },
 };
 
-class TopBar extends Component {
-    signIn = () => {
-        this.props.firebase.signInUsingGoogle();
+const TopBar = ({ firebase, classes }) => {
+    const signIn = () => {
+        firebase.signIn();
     };
-
-    render() {
-        const {classes} = this.props;
-        return (
-            <div className={classes.root}>
-                <AppBar position="static">
-                    <Toolbar>
-                        <IconButton className={classes.menuButton} color="inherit">
-                            <LogoIcon/>
-                        </IconButton>
-                        <Typography variant="h6" color="inherit" className={classes.grow} align={"right"}>
-                            hi there
-                        </Typography>
-                        <IconButton color="inherit" onClick={this.signIn}>
-                            <FontAwesomeIcon icon={faSignInAlt}></FontAwesomeIcon>
-                        </IconButton>
-                    </Toolbar>
-                </AppBar>
-            </div>
-        );
-    }
+    
+    return (
+        <div className={classes.root}>
+            <AppBar position="static">
+                <Toolbar>
+                    <IconButton className={classes.menuButton} color="inherit">
+                        <LogoIcon/>
+                    </IconButton>
+                    <Typography variant="h6" color="inherit" className={classes.grow} align={"right"}>
+                        hi there
+                    </Typography>
+                    <IconButton color="inherit" onClick={signIn}>
+                        <FontAwesomeIcon icon={faSignInAlt}></FontAwesomeIcon>
+                    </IconButton>
+                </Toolbar>
+            </AppBar>
+        </div>
+    );
 }
 
 TopBar.propTypes = {

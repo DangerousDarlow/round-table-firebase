@@ -17,13 +17,14 @@ class Firebase {
         this.auth = firebase.auth();
     }
 
-    signInUsingGoogle = () => {
-        console.log('doing something');
-
+    signIn = () => {
         let provider = new firebase.auth.GoogleAuthProvider();
-        this.auth.signInWithPopup(provider).then((result) => {
-           console.log(result);
-        });
+        this.auth.signInWithRedirect(provider);
+    }
+
+    handleSignInResult = async () => {
+        const result = await this.auth.getRedirectResult();
+        console.log(result);
     }
 }
 
