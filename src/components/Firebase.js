@@ -1,6 +1,9 @@
 import * as firebase from 'firebase/app';
 import 'firebase/auth'
 
+import LocalStorage from './LocalStorage';
+import UserCredentials from './UserCredentials';
+
 const firebaseConfig = {
     apiKey: "AIzaSyAsjxkFqR1S2Ki_fuCY6BFklE9kQkkOIQ8",
     authDomain: "round-table-game.firebaseapp.com",
@@ -15,6 +18,10 @@ class Firebase {
     constructor() {
         firebase.initializeApp(firebaseConfig);
         this.auth = firebase.auth();
+        this.localStorage = new LocalStorage();
+
+        this.userCredentialsKey = 'rt-user-credentials';
+        this.userCredentials = new UserCredentials(null, null);
     }
 
     signIn = () => {
@@ -23,8 +30,15 @@ class Firebase {
     }
 
     handleSignInResult = async () => {
-        const result = await this.auth.getRedirectResult();
-        console.log(result);
+        try {
+            const result = await this.auth.getRedirectResult();
+            if (result.credential) {
+                this.localStorage.save(this.userCredentialsKey, new UserCredentials(result.credential.accessToken, result.user));
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
     }
 }
 
