@@ -2,7 +2,6 @@ import * as firebase from 'firebase/app';
 import 'firebase/auth'
 
 import LocalStorage from './LocalStorage';
-import UserCredentials from './UserCredentials';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAsjxkFqR1S2Ki_fuCY6BFklE9kQkkOIQ8",
@@ -21,7 +20,7 @@ class Firebase {
         this.localStorage = new LocalStorage();
 
         this.userCredentialsKey = 'rt-user-credentials';
-        this.userCredentials = new UserCredentials(null, null);
+        this.userCredentials = {};
     }
 
     signIn = () => {
@@ -33,7 +32,9 @@ class Firebase {
         try {
             const result = await this.auth.getRedirectResult();
             if (result.credential) {
-                this.localStorage.save(this.userCredentialsKey, new UserCredentials(result.credential.accessToken, result.user));
+                this.userCredentials = { accessToken: result.credential.accessToken, user: result.user };
+                this.localStorage.save(this.userCredentialsKey, this.userCredentials);
+                console.log('redirect result credentials', this.userCredentials);
             }
         } catch (error) {
             console.error(error);

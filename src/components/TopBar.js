@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import {faSignInAlt} from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {IconButton} from '@material-ui/core';
-import {withStyles} from '@material-ui/core/styles';
+import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconButton } from '@material-ui/core';
+import { withStyles } from '@material-ui/core/styles';
 
 import LogoIcon from './LogoIcon';
 
@@ -24,22 +24,22 @@ const styles = {
     },
 };
 
-const TopBar = ({ firebase, classes }) => {
-    const signIn = () => {
-        firebase.signIn();
-    };
-    
+const TopBar = ({ login, classes, credentials }) => {
+    useEffect(() => {
+        console.log('topbar credentials', credentials);
+    })
+
     return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
                     <IconButton className={classes.menuButton} color="inherit">
-                        <LogoIcon/>
+                        <LogoIcon />
                     </IconButton>
                     <Typography variant="h6" color="inherit" className={classes.grow} align={"right"}>
-                        hi there
+                        {credentials.user ? credentials.user.displayName : null}
                     </Typography>
-                    <IconButton color="inherit" onClick={signIn}>
+                    <IconButton color="inherit" onClick={login}>
                         <FontAwesomeIcon icon={faSignInAlt}></FontAwesomeIcon>
                     </IconButton>
                 </Toolbar>
