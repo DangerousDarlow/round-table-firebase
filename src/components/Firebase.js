@@ -1,7 +1,7 @@
-import * as firebase from 'firebase/app';
+import * as firebase from 'firebase/app'
 import 'firebase/auth'
 
-import LocalStorage from './LocalStorage';
+import LocalStorage from './LocalStorage'
 
 const firebaseConfig = {
     apiKey: "AIzaSyAsjxkFqR1S2Ki_fuCY6BFklE9kQkkOIQ8",
