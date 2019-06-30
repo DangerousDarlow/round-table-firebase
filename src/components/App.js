@@ -1,23 +1,52 @@
 import React, { useEffect, useState } from 'react'
 
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
+
 import TopBar from './TopBar'
 
-const App = ({ firebase }) => {
+const firebaseConfig = {
+  apiKey: 'AIzaSyAsjxkFqR1S2Ki_fuCY6BFklE9kQkkOIQ8',
+  authDomain: 'round-table-game.firebaseapp.com',
+  databaseURL: 'https://round-table-game.firebaseio.com',
+  projectId: 'round-table-game',
+  storageBucket: 'round-table-game.appspot.com',
+  messagingSenderId: '270371884978',
+  appId: '1:270371884978:web:91a4731bcf1515e6'
+}
+
+const App = () => {
   // useState returns a variable and a function
   // https://reactjs.org/docs/hooks-state.html
   const [user, setUser] = useState({})
 
   const login = () => {
-    firebase.signIn()
+    let provider = new firebase.auth.GoogleAuthProvider()
+    firebase.auth().signInWithRedirect(provider)
   }
 
-  const logout = () => {
-    firebase.signOut()
+  const logout = async () => {
+    try {
+      await firebase.auth().signOut()
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   useEffect(() => {
-    firebase.setAuthStateChangedHandler(setUser)
-  }, [firebase])
+    // Prevent firebase being initialised multiple times
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig)
+    }
+
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        setUser(user)
+      } else {
+        setUser(null)
+      }
+    })
+  })
 
   return (
     <div className='App'>

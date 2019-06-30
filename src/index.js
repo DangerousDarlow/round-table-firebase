@@ -3,12 +3,11 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './components/App'
 import * as serviceWorker from './serviceWorker'
-import Firebase from './components/Firebase'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 ReactDOM.render(
   <CssBaseline>
-    <App firebase={new Firebase()} />
+    <App />
   </CssBaseline>,
   document.getElementById('root')
 )
