@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
-import TopBar from './components/TopBar'
+import TopBar from './TopBar'
 
 const App = ({ firebase }) => {
+  // useState returns a variable and a function
+  // https://reactjs.org/docs/hooks-state.html
   const [user, setUser] = useState({})
 
   const login = () => {
