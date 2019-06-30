@@ -27,13 +27,13 @@ const styles = {
 const TopBar = ({ login, classes, credentials }) => {
   useEffect(() => {
     console.log('topbar credentials', credentials)
-    })
+  })
 
   return (
     <div className={classes.root}>
       <AppBar position='static'>
         <Toolbar>
-                  <IconButton className={classes.menuButton} color='inherit'>
+          <IconButton className={classes.menuButton} color='inherit'>
             <LogoIcon />
           </IconButton>
           <Typography variant='h6' color='inherit' className={classes.grow} align={'right'}>
