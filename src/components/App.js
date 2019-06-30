@@ -37,15 +37,15 @@ const App = () => {
     // Prevent firebase being initialised multiple times
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig)
-    }
 
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user)
-      } else {
-        setUser(null)
-      }
-    })
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          setUser(user)
+        } else {
+          setUser(null)
+        }
+      })
+    }
   })
 
   return (
