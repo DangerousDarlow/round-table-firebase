@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons'
+import { faSignInAlt, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { IconButton } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles'
@@ -24,11 +24,7 @@ const styles = {
   }
 }
 
-const TopBar = ({ login, classes, credentials }) => {
-  useEffect(() => {
-    console.log('topbar credentials', credentials)
-  })
-
+const TopBar = ({ classes, login, logout, user }) => {
   return (
     <div className={classes.root}>
       <AppBar position='static'>
@@ -37,11 +33,16 @@ const TopBar = ({ login, classes, credentials }) => {
             <LogoIcon />
           </IconButton>
           <Typography variant='h6' color='inherit' className={classes.grow} align={'right'}>
-            {credentials.user ? credentials.user.displayName : null}
+            {user ? user.displayName : null}
           </Typography>
-          <IconButton color='inherit' onClick={login}>
-            <FontAwesomeIcon icon={faSignInAlt} />
-          </IconButton>
+          {user
+            ? <IconButton color='inherit' onClick={logout}>
+              <FontAwesomeIcon icon={faSignOutAlt} />
+            </IconButton>
+            : <IconButton color='inherit' onClick={login}>
+              <FontAwesomeIcon icon={faSignInAlt} />
+            </IconButton>
+          }
         </Toolbar>
       </AppBar>
     </div>

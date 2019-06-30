@@ -11,23 +11,17 @@ const App = ({ firebase }) => {
     firebase.signIn()
   }
 
+  const logout = () => {
+    firebase.signOut()
+  }
+
   useEffect(() => {
-    // Why does this execute twice before authentication is attempted?
-
-    // Yuk! This isn't the right thing to do.
-    if (Object.keys(user).length > 0) {
-      return
-    }
-
-    firebase.handleSignInResult()
-      .then(() => {
-        setUser(firebase.userCredentials)
-      })
-  })
+    firebase.setAuthStateChangedHandler(setUser)
+  }, [firebase])
 
   return (
     <div className='App'>
-      <TopBar login={login} credentials={user} />
+      <TopBar login={login} logout={logout} user={user} />
     </div>
   )
 }

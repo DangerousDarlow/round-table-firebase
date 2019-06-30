@@ -1,8 +1,6 @@
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 
-import LocalStorage from './LocalStorage'
-
 const firebaseConfig = {
     apiKey: "AIzaSyAsjxkFqR1S2Ki_fuCY6BFklE9kQkkOIQ8",
     authDomain: "round-table-game.firebaseapp.com",
@@ -16,30 +14,29 @@ const firebaseConfig = {
 class Firebase {
     constructor() {
         firebase.initializeApp(firebaseConfig);
-        this.auth = firebase.auth();
-        this.localStorage = new LocalStorage();
+    }
 
-        this.userCredentialsKey = 'rt-user-credentials';
-        this.userCredentials = {};
+    setAuthStateChangedHandler = (setUser) => {
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+              setUser(user)
+            } else {
+              setUser(null)
+            }
+          })
     }
 
     signIn = () => {
         let provider = new firebase.auth.GoogleAuthProvider();
-        this.auth.signInWithRedirect(provider);
+        firebase.auth().signInWithRedirect(provider);
     }
 
-    handleSignInResult = async () => {
+    signOut = async () => {
         try {
-            const result = await this.auth.getRedirectResult();
-            if (result.credential) {
-                this.userCredentials = { accessToken: result.credential.accessToken, user: result.user };
-                this.localStorage.save(this.userCredentialsKey, this.userCredentials);
-                console.log('redirect result credentials', this.userCredentials);
-            }
+            await firebase.auth().signOut()
         } catch (error) {
-            console.error(error);
+            console.error(error)
         }
-
     }
 }
 
