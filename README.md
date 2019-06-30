@@ -15,3 +15,7 @@ You will also see any lint errors in the console.
 ### `yarn test`
 
 Launches the test runner.<br>
+
+### `yarn build` && `firebase deploy`
+
+Build production and deploy to firebase hosting
