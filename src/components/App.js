@@ -41,7 +41,6 @@ const App = () => {
 
   useEffect(() => {
     if (!firebase.apps.length) {
-
       // Prevent firebase being initialised multiple times
       firebase.initializeApp(firebaseConfig)
 
