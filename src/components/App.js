@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 
 import TopBar from './TopBar'
+import Loading from './Loading'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAsjxkFqR1S2Ki_fuCY6BFklE9kQkkOIQ8',
@@ -49,9 +51,12 @@ const App = () => {
   })
 
   return (
-    <div className='App'>
-      <TopBar login={login} logout={logout} user={user} />
-    </div>
+    <Router>
+      <div className='App'>
+        <TopBar login={login} logout={logout} user={user} />
+        <Route path='/loading' component={Loading} />
+      </div>
+    </Router>
   )
 }
 

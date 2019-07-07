@@ -10,7 +10,7 @@ const styles = {
   }
 }
 
-const Loading = ({ classes, user }) => {
+const Loading = ({ classes }) => {
   return (
     <Grid
       className={classes.container}
