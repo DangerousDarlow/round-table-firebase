@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 
+import useLocalStorage from '../hooks/UseLocalStorage'
 import TopBar from './TopBar'
-import Loading from './Loading'
+import Waiting from './Waiting'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAsjxkFqR1S2Ki_fuCY6BFklE9kQkkOIQ8',
@@ -20,11 +21,14 @@ const firebaseConfig = {
 const App = () => {
   // useState returns a variable and a function
   // https://reactjs.org/docs/hooks-state.html
-  const [user, setUser] = useState({})
+  const [user, setUser] = useState()
 
-  const login = () => {
+  const [waiting, setWaiting] = useLocalStorage('round-table-waiting', false)
+
+  const login = (setLoading) => {
     let provider = new firebase.auth.GoogleAuthProvider()
     firebase.auth().signInWithRedirect(provider)
+    setLoading(true)
   }
 
   const logout = async () => {
@@ -36,8 +40,9 @@ const App = () => {
   }
 
   useEffect(() => {
-    // Prevent firebase being initialised multiple times
     if (!firebase.apps.length) {
+
+      // Prevent firebase being initialised multiple times
       firebase.initializeApp(firebaseConfig)
 
       firebase.auth().onAuthStateChanged((user) => {
@@ -46,6 +51,8 @@ const App = () => {
         } else {
           setUser(null)
         }
+
+        setWaiting(false)
       })
     }
   })
@@ -53,8 +60,8 @@ const App = () => {
   return (
     <Router>
       <div className='App'>
-        <TopBar login={login} logout={logout} user={user} />
-        <Route path='/loading' component={Loading} />
+        <TopBar login={() => login(setWaiting)} logout={logout} user={user} />
+        {waiting && <Waiting />}
       </div>
     </Router>
   )

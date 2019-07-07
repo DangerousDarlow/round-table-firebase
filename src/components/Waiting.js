@@ -10,7 +10,7 @@ const styles = {
   }
 }
 
-const Loading = ({ classes }) => {
+const Waiting = ({ classes }) => {
   return (
     <Grid
       className={classes.container}
@@ -25,4 +25,4 @@ const Loading = ({ classes }) => {
   )
 }
 
-export default withStyles(styles)(Loading)
+export default withStyles(styles)(Waiting)
