@@ -4,6 +4,7 @@ import './index.css'
 import App from './components/App'
 import * as serviceWorker from './serviceWorker'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import 'typeface-roboto'
 
 ReactDOM.render(
   <CssBaseline>

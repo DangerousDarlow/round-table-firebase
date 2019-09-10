@@ -1,12 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
 
-import useLocalStorage from '../hooks/UseLocalStorage';
-import TopBar from './TopBar';
-import Waiting from './Waiting';
+import useLocalStorage from '../hooks/UseLocalStorage'
+import TopBar from './TopBar'
+import Waiting from './Waiting'
+import Landing from './Landing'
+import Home from './Home'
+
+import { withStyles } from '@material-ui/core/styles'
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAsjxkFqR1S2Ki_fuCY6BFklE9kQkkOIQ8',
@@ -18,7 +23,13 @@ const firebaseConfig = {
   appId: '1:270371884978:web:91a4731bcf1515e6'
 }
 
-const App = () => {
+const styles = {
+  page: {
+    margin: '10px'
+  }
+}
+
+const App = ({ classes }) => {
   // useState returns a variable and a function
   // https://reactjs.org/docs/hooks-state.html
   const [user, setUser] = useState()
@@ -29,7 +40,7 @@ const App = () => {
     let provider = new firebase.auth.GoogleAuthProvider()
     firebase.auth().signInWithRedirect(provider)
     setWaiting(true)
-  };
+  }
 
   const logout = async () => {
     try {
@@ -60,10 +71,20 @@ const App = () => {
     <Router>
       <div className='App'>
         <TopBar login={() => login(setWaiting)} logout={logout} user={user} />
-        {waiting ? <Waiting /> : <Router />}
+        <div className={classes.page}>
+          {waiting ? <Waiting />
+            : <Router>
+              <Route exact path='/' component={Landing} />
+              <Route exact path='/home' component={Home} />
+            </Router>}
+        </div>
       </div>
     </Router>
   )
-};
+}
 
-export default App
+App.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(App)
