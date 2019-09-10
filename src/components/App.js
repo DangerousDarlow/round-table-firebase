@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react'
-import { BrowserRouter as Router } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-import * as firebase from 'firebase/app'
-import 'firebase/auth'
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
-import useLocalStorage from '../hooks/UseLocalStorage'
-import TopBar from './TopBar'
-import Waiting from './Waiting'
+import useLocalStorage from '../hooks/UseLocalStorage';
+import TopBar from './TopBar';
+import Waiting from './Waiting';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAsjxkFqR1S2Ki_fuCY6BFklE9kQkkOIQ8',
@@ -25,11 +25,11 @@ const App = () => {
 
   const [waiting, setWaiting] = useLocalStorage('round-table-waiting', false)
 
-  const login = (setLoading) => {
+  const login = setWaiting => {
     let provider = new firebase.auth.GoogleAuthProvider()
     firebase.auth().signInWithRedirect(provider)
-    setLoading(true)
-  }
+    setWaiting(true)
+  };
 
   const logout = async () => {
     try {
@@ -44,7 +44,7 @@ const App = () => {
       // Prevent firebase being initialised multiple times
       firebase.initializeApp(firebaseConfig)
 
-      firebase.auth().onAuthStateChanged((user) => {
+      firebase.auth().onAuthStateChanged(user => {
         if (user) {
           setUser(user)
         } else {
@@ -60,10 +60,10 @@ const App = () => {
     <Router>
       <div className='App'>
         <TopBar login={() => login(setWaiting)} logout={logout} user={user} />
-        {waiting && <Waiting />}
+        {waiting ? <Waiting /> : <Router />}
       </div>
     </Router>
   )
-}
+};
 
 export default App
