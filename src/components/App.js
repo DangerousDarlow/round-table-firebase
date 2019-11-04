@@ -10,6 +10,7 @@ import TopBar from './TopBar'
 import Waiting from './Waiting'
 import Landing from './Landing'
 import Home from './Home'
+import Create from './Create'
 
 import { withStyles } from '@material-ui/core/styles'
 
@@ -76,6 +77,7 @@ const App = ({ classes }) => {
             : <Router>
               <Route exact path='/' component={Landing} />
               <Route exact path='/home' component={Home} />
+              <Route exact path='/create' component={Create} />
             </Router>}
         </div>
       </div>
